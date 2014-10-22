@@ -1,0 +1,37 @@
+# Meteor packages used by this project, one per line.
+#
+# 'meteor add' and 'meteor remove' will edit this file for you,
+# but you can also edit it by hand.
+
+meteor-platform
+splendido:accounts-templates-bootstrap
+accounts-password
+accounts-facebook
+accounts-google
+iron:router
+mizzao:bootstrap-3
+cfs:filesystem
+cfs:collection
+cfs:collection-filters
+cfs:standard-packages
+cfs:power-queue
+cfs:micro-queue
+cfs:reactive-list
+cfs:ui
+cfs:upload-http
+cfs:transfer
+cfs:tempstore
+cfs:ejson-file
+cfs:worker
+cfs:upload-ddp
+cfs:data-man
+cfs:storage-adapter
+cfs:http-publish
+cfs:http-methods
+cfs:filesaver
+cfs:reactive-property
+cfs:gridfs
+nooitaf:colors
+mrt:moment
+chrismbeckett:fontawesome4
+markdown

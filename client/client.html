@@ -1,0 +1,258 @@
+<head>
+  <title>Obituary</title>
+</head>
+
+<body></body>
+
+<template name="mainLayout">
+  <div class="container-fluid container-top">
+    <div class="row">
+      <div class="col-xs-12 text-right">
+        {{> yield region='top'}}
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid container-content">
+    <div class="row">
+      <div class="col-xs-6 col-xs-offset-3">
+        {{> yield}}
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid container-footer">
+    <div class="row">
+      <div class="col-xs-6 col-xs-offset-3">
+        {{> yield region='footer'}}
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<template name="userTop">
+  {{#if currentUser}}
+    <h4><a href="{{pathFor 'profile'}}">{{currentUser.username}}</a> | <a href="{{pathFor 'logout'}}">Logout</a></h4>
+  {{else}}
+    <h4><a href="{{pathFor 'signin'}}">Login</a> | <a href="{{pathFor 'signup'}}">Register</a></h4>
+  {{/if}}
+</template>
+
+<template name="footer">
+</template>
+
+
+<template name="home">
+  {{#if currentUser}}
+    {{> addPost}}
+  {{/if}}
+  {{> posts}}
+  {{> homeImage}}
+</template>
+
+<template name="homeImage">
+  {{#with homeImageFileSelected}}
+    {{#if isUploaded}}
+      <img src="{{this.url store='images-original'}}" class="home-image">
+    {{/if}}
+  {{/with}}
+</template>
+
+
+<template name="addPost">
+  {{#if addingPostOpen}}
+    <form role="form" style="padding:18px; background:#fff;">
+      <div class="form-group">
+        <select class="form-control post-privacy">
+          <option value="private">Privat</option>
+          <option value="open">Öffentlich</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <select class="form-control post-font">
+          <option value="Halant">Halant</option>
+          <option value="Vollkorn">Vollkorn</option>
+          <option value="Lustria">Lustria</option>
+          <option value="Damion">Damion</option>
+          <option value="Sacramento">Sacramento</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <textarea class="form-control post-text" rows="10"></textarea>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control post-name" value="{{currentUser.username}}">
+      </div>
+      <div class="form-group">
+        Select file(s) to upload (<b>JPG only</b>)<br/>
+        <input name="files" id="files" type="file" class="post-images" multiple>
+      </div>
+      <button class="btn btn-default submit">Versenden</button>
+    </form>
+  {{else}}
+    <div class="block-center">
+      <div class="add-post-plus">+</div>
+    </div>
+  {{/if}}
+</template>
+
+
+<template name="posts">
+  {{#each posts}}
+    <div class="container-fluid container-post">
+
+      <!-- top -->
+      <div class="row">
+        <div class="row">
+          <div class="col-xs-6">
+            <p class="post-show-date">{{niceDate}}</p>
+          </div>
+          <div class="col-xs-6">
+            <p class="post-show-name text-right">{{name}}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- text -->
+      <div class="row">
+        <h3 class="post-show-text" style="font-family:{{font}}">{{#markdown}}{{text}}{{/markdown}}</h3>
+      </div>
+
+      <!-- images -->
+      <div class="row">
+        {{#each images}}
+          <div class="col-xs-6">
+            <img src="{{this.url store='images-original'}}" class="img-responsive img-thumbnail">
+          </div>
+        {{/each}}
+      </div>
+
+      <!-- control -->
+      {{#if currentUser}}
+        <div class="row">
+          <div class="text-right">
+            {{#if isPrivate}} 
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x" style="color:red;"></i>
+                <i class="fa fa-lock fa-stack-1x fa-inverse"></i>
+              </span>
+            {{else}}
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x" style="color:green;"></i>
+                <i class="fa fa-unlock fa-stack-1x fa-inverse"></i>
+              </span>
+            {{/if}}
+            {{#if isAdmin}}   
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-trash fa-stack-1x fa-inverse"></i>
+              </span>
+            {{/if}}
+          </div>
+        </div>
+      {{/if}}
+
+    </div>
+  {{/each}}
+</template>
+
+
+
+<template name="profile">
+  {{#with currentUser}}
+    <form role="form" style="padding:18px; background:#fff;">
+      <div class="form-group" style="display:none;">
+        <label for="inEmail">Email</label>
+        <input type="email" class="form-control profile-input email" id="inEmail" placeholder="Email" value="{{firstEmail emails}}">
+      </div>
+      <div class="form-group">
+        <label for="inName">Name</label>
+        <input type="text" class="form-control profile-input username" id="inName" placeholder="Name" value="{{username}}">
+      </div>
+      <div class="form-group">
+        <label for="inPhone">Telefon</label>
+        <input type="phone" class="form-control profile-input phone" id="inPhone" placeholder="Telefon" value="{{phone}}">
+      </div>
+      <button class="btn btn-default submit">Änderungen speichern</button>
+      <a href="{{pathFor 'home'}}"><h4>&lt;&lt; Zurück</h4></a>
+    </form>
+  {{/with}}
+</template>
+
+
+
+
+
+<template name="loading">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-4 col-xs-offset-4">
+        <div class="progress center-block">
+          <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            <span class="sr-only">loading</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+
+<template name="formLayout">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-4 col-xs-offset-4">
+        {{> atForm}}
+      </div>
+    </div>
+  </div>
+</template>
+
+
+
+<!-- admin-area -->
+
+<template name="admin">
+  {{> adminHomeImage}}
+ </template>
+
+<template name="adminHomeImage">
+  <h1>Home Image</h1>
+
+  {{> adminDropZone}}
+  {{> adminFileTable}}
+</template>
+
+
+<template name="adminDropZone">
+  <div>
+    Select file(s) to upload (<b>JPG only</b>)<br/>
+    <input name="files" id="files" type="file" class="fileUploader" multiple>
+  </div>
+</template>
+
+<template name="adminFileTable">
+  {{#each files}}
+    <div>
+      {{#if isUploaded}}
+        <img src="{{this.url store='images-original'}}" height="64" width="64">
+      {{/if}}
+    </div>
+    <div>{{name}}</div>
+    <div>
+      {{#if isUploaded}}
+        <i>uploaded</i>
+      {{else}}
+        <i>uploading: {{uploadProgress}}%</i>
+      {{/if}}
+      <i class="remove" style="cursor:pointer;">remove</i>
+      {{#if isSelected this}}
+        <i class="deselect" style="cursor:pointer;">deselect</i>
+      {{else}}
+        <i class="select" style="cursor:pointer;">select</i>
+      {{/if}}
+    </div>
+  {{else}}
+    <h3>No files uploaded.</h3>
+  {{/each}}
+</template>

@@ -1,0 +1,67 @@
+@import url(http://fonts.googleapis.com/css?family=Lustria|Halant|Vollkorn|Damion|Sacramento&subset=latin,latin-ext);
+
+.fonts {
+	font-family: 'Halant', serif;
+	font-family: 'Vollkorn', serif;
+	font-family: 'Lustria', serif;
+	font-family: 'Damion', cursive;
+	font-family: 'Sacramento', cursive;
+}
+
+
+body,html {
+	background:#eee;
+}
+.home-image {
+	width:100%;
+	border:5px solid black;
+}
+
+.progress {
+	 width:50px;
+	 height:50px;
+	 border-radius: 25px;
+}
+.progress-bar {
+	background-color:#555;
+}
+
+.container-top {
+	background:#eee;
+	padding-bottom:2px;
+}
+
+.container-content > div > div {
+	/*border:5px solid black;*/
+	padding:8px 0px 8px 0px;
+}
+.container-footer {
+	background:#eee;
+	height:50px;
+}
+
+.container-post {
+	background:white;
+	margin-top:10px;
+}
+.container-post > .row {
+	padding:10px;
+}
+.post-show-date {
+	color:#aaa;
+}
+.post-show-name {
+	color:#aaa;
+}
+.post-show-text {
+	padding:20px;
+	text-align: center;
+	line-height: 36px;
+}
+
+
+.profile-input {
+	border-radius: 0px;
+	font-size: 24px;
+	height:48px;
+}
