@@ -54,7 +54,7 @@ Meteor.publish("posts", function () {
 // --- Startup -----------------------------------------------------------------------
 
 Meteor.startup(function(){
-	var adminEmail = "nooitaf@gmail.com";
+	var adminEmail = "admin@example.com";
 	var adminUser = Meteor.users.findOne({'emails.0.address':adminEmail});
 	//console.log(adminUser);
 	if (adminUser) {
